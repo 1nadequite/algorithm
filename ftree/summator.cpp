@@ -9,9 +9,8 @@ class summator {
     summator(size_t n) : data_(n + 1) {}
 
     void add(size_t i, T amount) {
-      for (i++; i <= data_.size(); i += -i & i) {
+      for (i++; i <= data_.size(); i += -i & i)
         data_[i] += amount;
-      }
     }
 
     T sum(size_t l, size_t r) {

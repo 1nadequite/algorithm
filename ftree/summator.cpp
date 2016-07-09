@@ -22,14 +22,16 @@ class summator {
       return result;
     }
   private:
+    // indexing here is from [1, n]
     vector<T> data_;
 };
 
 int main() {
-  summator<int> sum(10); // indexing from [0, n-1], like in vector
+  int n = 10;
+  summator<int> sum(n); // indexing from [0, n-1], like in vector
 
   // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-  for (int i = 0; i < 10; ++i)
+  for (int i = 0; i < n; ++i)
     sum.add(i, i); // add elements in summator
 
   cout << sum.sum(0, 3) << endl; // sum [0, 3] = 6

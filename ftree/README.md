@@ -1,4 +1,4 @@
-#Fenwick Tree (binary ibdexed tree)
+#Fenwick Tree (binary indexed tree)
 # - summator
 # - maximizator
 # - minimizator

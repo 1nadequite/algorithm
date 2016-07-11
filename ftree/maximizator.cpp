@@ -6,7 +6,11 @@ using namespace std;
 template <typename T>
 class maximizator {
   public:
-    maximizator(size_t n) : data_s_(n + 1), data_left_(n + 1), data_right_(n + 1) {}
+    maximizator(size_t n) {
+        data_s_.assign(n + 1, -1000000000);
+        data_left_.assign(n + 1, -1000000000);
+        data_right_.assign(n + 1, -1000000000);
+    }
 
     void add(size_t x, T amount) {
       x++;
@@ -22,7 +26,7 @@ class maximizator {
 
     T get(size_t l, size_t r) {
       l++; r++;
-      T result = 0, i;
+      T result = -1000000000, i;
       for (i = r; (i & (i - 1)) >= l; i &= i - 1)
         if (result < data_left_[i])
           result = data_left_[i];

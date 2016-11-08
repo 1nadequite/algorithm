@@ -9,47 +9,39 @@
 using namespace std;
 map<char, string> ans;
 
-struct node {
-  int chan;
-  char sym;
-  node *left;
-  node *right;
-  node(int c, char s) : chan(c), sym(s), left(NULL), right(NULL) {}
-};
-
-void createHuffTree(node *root, string s) {
-  if (root->sym != ' ') {
-    if (!s.size()) ans[root->sym] = '0';
-    else ans[root->sym] = s;
-    return;
-  }
-  string t = s + '0';
-  createHuffTree(root->left, t);
-  t = s + '1';
-  createHuffTree(root->right, t);
-}
-
 int main() {
   string s; cin >> s;
   map<char, int> m;
   int n = s.size();
   for (int i = 0; i < n; ++i) m[s[i]]++;
-  priority_queue<pair<int, node*>, vector<pair<int, node*>>, greater<pair<int, node*>>> huff_queue;
-  for (auto& x: m) {
-    node *nn = new node(x.second, x.first);
-    huff_queue.push({x.second, nn});
+
+  if (m.size() == 1) {
+    cout << m.size() << ' ' << s.size() << endl;
+    cout << s[0] << ": " << 0 << endl;
+    for (int i = 0; i < n; ++i)
+      cout << 0;
+    cout << endl;
+    return 0;
   }
+
+  priority_queue<pair<int, string>, vector<pair<int, string>>, greater<pair<int, string>>> huff_queue;
+  for (auto &x: m)
+    huff_queue.push({x.second, string(1, x.first)});
+
   while (huff_queue.size() > 1) {
     auto a1 = huff_queue.top();
     huff_queue.pop();
     auto a2 = huff_queue.top();
     huff_queue.pop();
-    node *nn = new node(a1.first + a2.first, ' ');
-    nn->left = a1.second;
-    nn->right = a2.second;
-    huff_queue.push({a1.first + a2.first, nn});
+
+    for (auto &c: a1.second)
+      ans[c] += '0';
+    for (auto &c: a2.second)
+      ans[c] += '1';
+    huff_queue.push({a1.first + a2.first, a1.second + a2.second});
   }
-  createHuffTree(huff_queue.top().second, "");
+  for (auto &x: ans)
+    reverse(x.second.begin(), x.second.end());
 
   string s_ans;
   for (auto& x: s)
